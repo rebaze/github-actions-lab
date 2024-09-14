@@ -1,0 +1,27 @@
+name: 'ssh-do'
+description: 'Remotely execute things'
+inputs:
+  command:
+    description: 'SSH Executable Command'
+    required: true
+  host:
+    description: 'Remote Host'
+    required: true
+  shell:
+    description: 'Shell to use'
+    required: false
+    default: 'sh'
+runs:
+  using: "composite"
+  steps:
+    - name: Execute SSH Command
+      run: |
+         ssh ${SSH_OPTIONS} \
+          -i ~/.ssh/id_rsa \
+          -l ${SSH_USER} \
+          ${{ inputs.host}} \
+          "${{ inputs.command }}"
+      shell: bash
+      env:
+        COMMAND: ${{ inputs.command }}
+        SHELL: ${{ inputs.shell }}
