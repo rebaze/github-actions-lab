@@ -47,7 +47,7 @@ jobs:
         contents: read
         packages: read
       container:
-        image: ${{env.IMAGE_NAME}}:${{github.run_number}}
+        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{github.run_number}}
         credentials:
           username: ${{ github.actor }}
           password: ${{ github.token }}

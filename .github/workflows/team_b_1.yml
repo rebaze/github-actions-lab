@@ -12,10 +12,11 @@ jobs:
         shell: bash
         run: |
           echo The secret: ${{ secrets.TREASURE }}
-      - name: Verify Task
-        shell: bash
-        run: |
-          : "${{ secrets.TREASURE:?TREASURE is not set or is empty }}"
+      - name: "check is TREASURE exists"
+        env:
+          treasure: ${{ secrets.TREASURE }}
+        if: ${{ env.treasure == '' }}
+        run: 'echo "Secret is not set" && exit 1'
 
   print-hash:
     runs-on: ubuntu-22.04
