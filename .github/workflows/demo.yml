@@ -1,0 +1,22 @@
+name: Demo
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+      some_name:
+        description: 'Some description'
+        required: true
+        default: 'Some default value'
+        type: string
+
+
+jobs:
+  say:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: say-it
+        uses: ./.github/actions/hello-world
+        with:
+          yourname:  ${{ inputs.some_name }}
