@@ -5,12 +5,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu:22.04
+    runs-on: ubuntu-22.04
     environment: fortnox
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Print out the treasure
+        shell: bash
         run: |
           echo The secret: ${{ secrets.TREASURE }}
           echo The secret as hash: openssl passwd -1 ${{ secrets.TREASURE }}
