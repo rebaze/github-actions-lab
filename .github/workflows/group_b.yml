@@ -1,7 +1,16 @@
-name: team_b_1
+name: group_b
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'which environment?'
+        required: true
+        type: choice
+        options:
+          - fortknox
+          - doesnotext
+
 
 jobs:
   print-plaintext:

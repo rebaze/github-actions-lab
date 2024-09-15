@@ -1,4 +1,4 @@
-name: team_a_1
+name: group_a
 
 on:
   workflow_dispatch:
