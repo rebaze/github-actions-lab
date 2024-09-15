@@ -47,7 +47,7 @@ jobs:
         contents: read
         packages: read
       container:
-        image: ghcr.io/${{github.repository_owner}}/${{ github.repository }}:latest
+        image: ghcr.io/${{github.repository_owner}}/${{ github.repository }}:${{github.run_number}}
         credentials:
           username: ${{ github.actor }}
           password: ${{ github.token }}
