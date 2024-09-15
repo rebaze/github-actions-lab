@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 env:
+  REGISTRY: ghcr.io
   IMAGE_NAME: ghcr.io/${{github.repository_owner}}/${{ github.repository }}
 
 
@@ -27,7 +28,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          #password: ${{ secrets.REGISTRY_PAT }}
+          password: ${{ github.token }}
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
