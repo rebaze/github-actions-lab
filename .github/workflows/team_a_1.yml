@@ -38,7 +38,7 @@ jobs:
           ls -trl
       - name: Check if file exists
         run: |
-          if [ ! -f build/libs/demo-0.0.1-SNAPSHOT.jar ]; then
+          if [ ! -f demo-0.0.1-SNAPSHOT.jar ]; then
             echo "File does not exist"
             exit 1
           fi
