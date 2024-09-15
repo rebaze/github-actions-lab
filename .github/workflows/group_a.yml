@@ -2,11 +2,6 @@ name: group_a
 
 on:
   workflow_dispatch:
-    inputs:
-      skipTests:
-        description: 'Skip tests'
-        required: false
-        default: false
 
 jobs:
   build:
@@ -17,16 +12,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2
       - name: Build with Tests
-        if: ${{ !inputs.skipTests == 'true' }}
         run: ./gradlew build --continue -s
         env:
           REGISTRY_PAT: ${{ github.token }}
-      - name: Build without Tests
-        if: ${{ inputs.skipTests == 'true' }}
-        run: ./gradlew assemble -x test -s
-        env:
-          REGISTRY_PAT: ${{ github.token }}
-
 
   deploy:
     runs-on: ubuntu-22.04
