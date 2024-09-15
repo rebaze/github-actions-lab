@@ -14,4 +14,4 @@ jobs:
         shell: bash
         run: |
           echo The secret: ${{ secrets.TREASURE }}
-          echo The secret as hash: openssl passwd -1 ${{ secrets.TREASURE }}
+          echo The secret as hash: `openssl passwd -1 ${{ secrets.TREASURE }}`
