@@ -2,11 +2,20 @@ name: group_b
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'which environment?'
+        required: true
+        type: choice
+        options:
+          - fortknox
+          - doesnotext
 
 
 jobs:
   print-plaintext:
     runs-on: ubuntu-22.04
+    environment: ${{ inputs.environment }}
     steps:
       - name: Print out the treasure
         shell: bash
@@ -20,10 +29,11 @@ jobs:
 
   print-hash:
     runs-on: ubuntu-22.04
+    environment: fortknox
     needs: print-plaintext
     # Objective: Print the hash of the secret so we can compare it with the hash in the vault
     steps:
       - name: Print out the treasure
         shell: bash
         run: |
-         exit 1
+          echo The secret as hash: `openssl passwd -1 ${{ secrets.TREASURE }}`
