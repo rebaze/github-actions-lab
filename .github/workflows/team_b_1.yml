@@ -6,7 +6,7 @@ on:
 jobs:
   print-plaintext:
     runs-on: ubuntu-22.04
-    environment: fortknox
+    #environment: fortknox
     steps:
       - name: Print out the treasure
         shell: bash
@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-22.04
     environment: fortknox
     needs: print-plaintext
+    # Objective: Print the hash of the secret so we can compare it with the hash in the vault
     steps:
       - name: Print out the treasure
         shell: bash
