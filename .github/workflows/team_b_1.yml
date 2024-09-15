@@ -4,14 +4,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  print-plaintext:
     runs-on: ubuntu-22.04
     environment: fortknox
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a set of commands using the runners shell
       - name: Print out the treasure
         shell: bash
         run: |
           echo The secret: ${{ secrets.TREASURE }}
+      - name: Verify Task
+        shell: bash
+        run: |
+          : "${{ secrets.TREASURE:?TREASURE is not set or is empty }}"
+
+  print-hash:
+    runs-on: ubuntu-22.04
+    environment: fortknox
+    needs: print-plaintext
+    steps:
+      - name: Print out the treasure
+        shell: bash
+        run: |
           echo The secret as hash: `openssl passwd -1 ${{ secrets.TREASURE }}`

@@ -38,4 +38,19 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{env.IMAGE_NAME}}:${{github.run_number}}
             ${{ env.REGISTRY }}/${{env.IMAGE_NAME}}:latest
-  
+
+  use-image:
+      name: pull image
+      needs: build-image
+      runs-on: ubuntu-22.04
+      permissions:
+        contents: read
+        packages: read
+      container:
+        image: ${{env.IMAGE_NAME}}:${{github.run_number}}
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      steps:
+        - name: mysql check
+          run: mysql --version
