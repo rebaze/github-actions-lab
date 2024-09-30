@@ -10,5 +10,6 @@ runs:
   steps:
     - name: Say Hello
       run: |
+         export MY_BAR=42
          echo "Hello ${{ inputs.yourname }}"
       shell: bash

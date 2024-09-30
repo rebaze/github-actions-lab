@@ -42,58 +42,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - name: Run a one-line script
-        run: echo Hello, world!
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - name: callout
+        uses: './.github/actions/hello-world'
         with:
-          java-version: 17
-          distribution: 'temurin'
-          cache: gradle
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3 # v3.4.2
-      - name: Build with Tests
-        if: ${{ !inputs.do_gradle  }}
-        run: ./gradlew build
-        env:
-          REGISTRY_PAT: ${{ github.token }}
-      - uses: actions/upload-artifact@v4 #  Objective 2
-        with:
-          name: demo.jar
-          path: build/libs/*.jar
+          yourname: 'Toni'
+      - name: Number 1
+        shell: bash
+        run: |
+          export MY_FOO=BAR
+      - name: Number 2
+        shell: bash
+        run: |
+          echo Other: ${MY_FOO}
+          echo From Action: ${MY_BAR}
+          
 
-  deploy:
-    needs: build
-    permissions:
-        contents: read
-        pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-  host_deploy:
-    needs: deploy
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
-      - name: Run a one-line script
-        run: echo Hello, world!
