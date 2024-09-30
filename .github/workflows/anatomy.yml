@@ -38,6 +38,7 @@ jobs:
           envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
           echo "| $MY_FOO | 🟢  |" >> $GITHUB_STEP_SUMMARY
           echo "| $MY_BAR | 🟢  |" >> $GITHUB_STEP_SUMMARY
+          echo "| ${{env.MY_BAR}} | 🟢  |" >> $GITHUB_STEP_SUMMARY
       - name: Number 2
         shell: bash
         run: |
