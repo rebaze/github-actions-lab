@@ -42,6 +42,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: callout
         uses: './.github/actions/hello-world'
         with:
@@ -50,6 +52,9 @@ jobs:
         shell: bash
         run: |
           export MY_FOO=BAR
+          envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
+          echo '| ${MY_FOO} | 🟢  |' >> $GITHUB_STEP_SUMMARY
+          echo '| ${MY_BAR} | 🟢  |' >> $GITHUB_STEP_SUMMARY
       - name: Number 2
         shell: bash
         run: |
