@@ -1,4 +1,4 @@
-name: Anatomy of a GitHub Actions Workflow
+name: anatomy
 
 # Controls when the workflow will run
 on:
