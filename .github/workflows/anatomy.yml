@@ -43,5 +43,7 @@ jobs:
         run: |
           echo Other: ${MY_FOO}
           echo From Action: ${MY_BAR}
+          echo "| $MY_BAR | 🟢  |" >> $GITHUB_STEP_SUMMARY
+
           
 
