@@ -31,20 +31,25 @@ jobs:
         uses: './.github/actions/hello-world'
         with:
           yourname: 'Toni'
-      - name: Number 1
+      - name: small
         shell: bash
         run: |
-          export MY_FOO=BAR
-          envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
-          echo "| $MY_FOO | 🟢  |" >> $GITHUB_STEP_SUMMARY
-          echo "| $MY_BAR | 🟢  |" >> $GITHUB_STEP_SUMMARY
-          echo "| ${{env.MY_BAR}} | 🟢  |" >> $GITHUB_STEP_SUMMARY
-      - name: Number 2
-        shell: bash
-        run: |
-          echo Other: ${MY_FOO}
-          echo From Action: ${MY_BAR}
-          echo "| $MY_BAR | 🟢  |" >> $GITHUB_STEP_SUMMARY
+          echo SHA1=ABC>> $GITHUB_ENV
+      - name: summary
+        uses: './.github/actions/write-summary'
+        with:
+          artifact-name: "foo"
+          artifact-checksum: ${{env.SHA1}}
+          artifact-version: "1.0.0"
+          successful: true
+      - name: summary2
+        uses: './.github/actions/write-summary'
+        with:
+          artifact-name: "other"
+          artifact-checksum: ${SHA1}
+          artifact-version: "1.0.0"
+          successful: false
+
 
           
 

@@ -10,6 +10,6 @@ runs:
   steps:
     - name: Say Hello
       run: |
-         echo MY_BAR=42>> $GITHUB_ENV
+         echo MY_BAR=super.war>> $GITHUB_ENV
          echo "Hello ${{ inputs.yourname }}"
       shell: bash

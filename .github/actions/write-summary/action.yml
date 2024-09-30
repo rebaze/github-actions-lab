@@ -1,0 +1,33 @@
+name: 'write-summary'
+description: 'Write Step Summary of a Deployment'
+inputs:
+  artifact-name:
+    description: 'Artifact Name'
+    required: true
+  artifact-version:
+    description: 'Artifact Version'
+    required: true
+  artifact-checksum:
+    description: 'SHA Sum'
+    required: true
+  successful:
+    description: 'Was the deployment successful?'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Summary Header Success
+      if: ${{inputs.successful}}
+      shell: bash
+      run: |
+        envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
+        echo "| ${{inputs.artifact-name}} | ${{inputs.artifact-version }} | ${{inputs.artifact-checksum }} | 🟢 |" >> $GITHUB_STEP_SUMMARY
+    - name: Summary Header Failure
+      if: ${{inputs.successful}}
+      shell: bash
+      run: |
+        envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
+        echo "| ${{inputs.artifact-name}} | ${{inputs.artifact-version }} | ${{inputs.artifact-checksum }} | 🔴 |" >> $GITHUB_STEP_SUMMARY
+       
+

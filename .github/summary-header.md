@@ -1,6 +1,2 @@
-## Deployment Summary
-
-Version: ${MY_VERSION}
-
-| Artifact       | Smoke Test |
-|---------------|-----------|
+| Artifact      | Version | Checksum | Deployment  | Smoke Test |
+|---------------|---------|----------|-------------|------------|
