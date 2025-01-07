@@ -1,4 +1,4 @@
-name: group_c_solved
+name: 🤖 image-build
 
 on:
   workflow_dispatch:

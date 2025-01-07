@@ -1,4 +1,4 @@
-name: group_b_solved
+name: 🤖 CI
 
 on:
   workflow_dispatch:
