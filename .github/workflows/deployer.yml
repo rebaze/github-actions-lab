@@ -1,0 +1,55 @@
+name: ♻️ deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      skipTests:
+        type: boolean
+        description: Skip Tests
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          cache: gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2
+      - name: Build with Tests
+        if: ${{ !inputs.skipTests  }}
+        run: ./gradlew build --continue -s
+        env:
+          REGISTRY_PAT: ${{ github.token }}
+      - name: Build without Tests
+        if: ${{ inputs.skipTests  }}
+        run: ./gradlew assemble -x test -s
+        env:
+          REGISTRY_PAT: ${{ github.token }}
+      - uses: actions/upload-artifact@v4 #  Objective 2
+        with:
+          name: demo.jar
+          path: build/libs/demo-0.0.1-SNAPSHOT.jar
+
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v4 # Objective 3
+        with:
+          name: demo.jar
+      - name: list files
+        run: |
+          ls -trl
+      - name: deploy (mock)
+        run: |
+          if [ ! -f demo-0.0.1-SNAPSHOT.jar ]; then
+            echo "File does not exist"
+            exit 1
+          fi
