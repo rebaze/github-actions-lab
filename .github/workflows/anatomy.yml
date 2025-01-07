@@ -21,34 +21,15 @@ jobs:
         pull-requests: write
         packages: write
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: callout
-        uses: './.github/actions/hello-world'
-        with:
-          yourname: 'Toni'
-      - name: small
-        shell: bash
-        run: |
-          echo SHA1=ABC>> $GITHUB_ENV
       - name: summary
-        uses: './.github/actions/write-summary'
-        with:
-          artifact-name: "foo"
-          artifact-checksum: ${{env.SHA1}}
-          artifact-version: "1.0.0"
-          successful: true
-      - name: summary2
-        uses: './.github/actions/write-summary'
-        with:
-          artifact-name: "other"
-          artifact-checksum: ${SHA1}
-          artifact-version: "1.0.0"
-          successful: false
+        uses: './.github/actions/openconnect-autoclose'
+
 
 
           

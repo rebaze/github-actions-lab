@@ -1,3 +1,3 @@
 # github-actions-starter
 
-![img.png](img.png)
+A Demo project for github actions.

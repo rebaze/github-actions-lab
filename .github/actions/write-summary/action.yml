@@ -24,7 +24,7 @@ runs:
         envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
         echo "| ${{inputs.artifact-name}} | ${{inputs.artifact-version }} | ${{inputs.artifact-checksum }} | 🟢 |" >> $GITHUB_STEP_SUMMARY
     - name: Summary Header Failure
-      if: ${{inputs.successful}}
+      if: ${{!inputs.successful}}
       shell: bash
       run: |
         envsubst < .github/summary-header.md >> $GITHUB_STEP_SUMMARY
