@@ -3,20 +3,14 @@ name: 🤖 CI
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'which environment?'
-        required: true
-        type: choice
-        options:
-          - fortknox
-          - doesnotext
+      skipTests:
+        type: boolean
+        description: Skip Tests
+        default: false
 
 
 jobs:
   call-build:
-    runs-on: ubuntu-22.04
-    environment: ${{ inputs.environment }}
-    steps:
-      - uses: ./.github/workflows/build.yml
-        with:
-          skipTests: true
+    uses: ./.github/workflows/build.yml
+    with:
+      skipTests: true
