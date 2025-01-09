@@ -13,27 +13,10 @@ on:
 
 
 jobs:
-  print-plaintext:
+  call-build:
     runs-on: ubuntu-22.04
     environment: ${{ inputs.environment }}
     steps:
-      - name: Print out the treasure
-        shell: bash
-        run: |
-          echo The secret: ${{ secrets.TREASURE }}
-      - name: "check is TREASURE exists"
-        env:
-          treasure: ${{ secrets.TREASURE }}
-        if: ${{ env.treasure == '' }}
-        run: 'echo "Secret is not set" && exit 1'
-
-  print-hash:
-    runs-on: ubuntu-22.04
-    environment: fortknox
-    needs: print-plaintext
-    # Objective: Print the hash of the secret so we can compare it with the hash in the vault
-    steps:
-      - name: Print out the treasure
-        shell: bash
-        run: |
-          echo The secret as hash: `openssl passwd -1 ${{ secrets.TREASURE }}`
+      - uses: ./.github/workflows/build.yml
+        with:
+          skipTests: true
