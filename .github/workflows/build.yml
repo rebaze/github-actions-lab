@@ -33,7 +33,7 @@ jobs:
         env:
           REGISTRY_PAT: ${{ github.token }}
       - name: Store reports
-        if: failure()
+        #if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: reports
