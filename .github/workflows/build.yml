@@ -32,6 +32,14 @@ jobs:
         run: ./gradlew assemble -x test -s
         env:
           REGISTRY_PAT: ${{ github.token }}
+      - name: Store reports
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
       - uses: actions/upload-artifact@v4 #  Objective 2
         with:
           name: demo.jar
