@@ -13,4 +13,4 @@ jobs:
   call-build:
     uses: ./.github/workflows/build.yml
     with:
-      skipTests: true
+      skipTests: ${{ inpiuts.skipTests }}
