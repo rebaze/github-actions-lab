@@ -43,7 +43,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: demo.jar.sigstore.json
-          path: build/libs/demo-0.0.1-SNAPSHOT.jar.sigstore.json
+           path: build/sigstore/sigstoreSignBootJavaPublication/demo-0.0.1-SNAPSHOT.jar.sigstore.json
 
   deploy:
     runs-on: ubuntu-22.04
