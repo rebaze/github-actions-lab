@@ -12,5 +12,8 @@ on:
 jobs:
   call-build:
     uses: ./.github/workflows/build.yml
+    permissions:
+      id-token: write
+      contents: read
     with:
       skipTests: ${{ inputs.skipTests }}
