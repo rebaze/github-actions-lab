@@ -10,28 +10,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 21
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: 21
           distribution: 'temurin'
-          cache: gradle
+          java-version: 25
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2
-      - name: Build with Tests
-        if: ${{ !inputs.skipTests  }}
-        run: ./gradlew build --continue -s
-        env:
-          REGISTRY_PAT: ${{ github.token }}
-      - name: Build without Tests
-        if: ${{ inputs.skipTests  }}
-        run: ./gradlew assemble -x test -s
-        env:
-          REGISTRY_PAT: ${{ github.token }}
+        uses: gradle/actions/setup-gradle@v5
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Sign artifacts with Sigstore
+        run: ./gradlew sigstoreSignBootJavaPublication
       - name: Store reports
         #if: failure()
         uses: actions/upload-artifact@v3
@@ -44,6 +40,10 @@ jobs:
         with:
           name: demo.jar
           path: build/libs/demo-0.0.1-SNAPSHOT.jar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo.jar.sigstore.json
+          path: build/libs/demo-0.0.1-SNAPSHOT.jar.sigstore.json
 
   deploy:
     runs-on: ubuntu-22.04
